@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venda de Açaí</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        #resultado {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Escolha o seu Açaí</h1>
+    <form id="formulario">
+        <label for="tamanho">Tamanho:</label>
+        <select id="tamanho" name="tamanho">
+            <option value="pequeno">Pequeno</option>
+            <option value="médio">Médio</option>
+            <option value="grande">Grande</option>
+        </select><br><br>
+        <label>Ingredientes Adicionais:</label><br>
+        <input type="checkbox" id="granola" name="granola"> <label for="granola">Granola</label><br>
+        <input type="checkbox" id="frutas" name="frutas"> <label for="frutas">Frutas</label><br>
+        <input type="checkbox" id="chantilly" name="chantilly"> <label for="chantilly">Chantilly</label><br><br>
+        <input type="submit" value="Calcular Preço">
+    </form>
+    <p id="resultado"></p>
+
+    <script>
+        document.getElementById('formulario').addEventListener('submit', function (e) {
+            e.preventDefault();
+            
+            const tamanho = document.getElementById('tamanho').value;
+            const ingredientes = document.querySelectorAll('input[type=checkbox]:checked');
+            let precoBase = 0;
+
+            if (tamanho === 'pequeno') {
+                precoBase = 11.00;
+            } else if (tamanho === 'médio') {
+                precoBase = 14.00;
+            } else if (tamanho === 'grande') {
+                precoBase = 17.00;
+            }
+
+            let precoIngredientes = 0;
+            ingredientes.forEach(function (item) {
+                if (item.id === 'granola') {
+                    precoIngredientes += 1.5;
+                } else if (item.id === 'frutas') {
+                    precoIngredientes += 2.0;
+                } else if (item.id === 'chantilly') {
+                    precoIngredientes += 1.0;
+                }
+            });
+
+            const precoTotal = precoBase + precoIngredientes;
+            document.getElementById('resultado').textContent = `Preço Total: R$ ${precoTotal.toFixed(2)}`;
+        });
+    </script>
+</body>
+</html>
